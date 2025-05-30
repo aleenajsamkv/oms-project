@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # RabbitMQ service for message queue
+  rabbitmq:
+    image: rabbitmq:3-management  # Using RabbitMQ with management UI
+    ports:
+      - "5672:5672"    # Main port for the queue
+      - "15672:15672"  # Port for the web UI
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest     # Default username
+      - RABBITMQ_DEFAULT_PASS=guest     # Default password
+
+  # LocalStack for simulating AWS S3 locally
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"    # LocalStack main port
+    environment:
+      - SERVICES=s3    # Only enable S3 service
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
